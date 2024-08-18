@@ -1,17 +1,8 @@
-import pytest
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import locators as lc
-
-
-@pytest.fixture(scope="function")
-def browser():
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    yield driver
-    driver.quit()
+from text_resources import ORDER_BUTTON_TEXT
 
 
 def login(browser, email, password):
@@ -27,14 +18,17 @@ def login(browser, email, password):
     # Ожидаем переход на главную страницу
     WebDriverWait(browser, 10).until(EC.url_to_be(lc.MAIN_PAGE_URL))
     # Проверяем, что текст кнопки изменился на "Оформить заказ"
+    # Изменено: исправлен вызов WebDriverWait для проверки наличия элемента с помощью EC.presence_of_element_located
     order_button = WebDriverWait(browser, 10).until(
-        EC.presence_of_element_located((By.XPATH, lc.ORDER_BUTTON_MAIN_PAGE)))
-    assert order_button.text == "Оформить заказ", "Авторизация не выполнена"
+        EC.presence_of_element_located((By.XPATH, lc.ORDER_BUTTON_MAIN_PAGE)))  # Исправлено
+    assert order_button.text == ORDER_BUTTON_TEXT, "Авторизация не выполнена"  # Исправлено, убрала хардкод
 
 
 def test_login_button_main_page(browser):
     browser.get(lc.MAIN_PAGE_URL)
-    login_button = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, lc.LOGIN_BUTTON_MAIN_PAGE)))
+    # Изменено: исправлен вызов WebDriverWait для ожидания кликабельности кнопки
+    login_button = WebDriverWait(browser, 10).until(
+        EC.element_to_be_clickable((By.XPATH, lc.LOGIN_BUTTON_MAIN_PAGE)))  # Исправлено
     login_button.click()
     login(browser, lc.TEST_EMAIL, lc.TEST_PASSWORD)
 

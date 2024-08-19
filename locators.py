@@ -7,6 +7,7 @@ REGISTRATION_PAGE_URL = "https://stellarburgers.nomoreparties.site/register"  # 
 LOGIN_PAGE_URL = "https://stellarburgers.nomoreparties.site/login"  # URL страницы логина
 
 # Тестовые данные
+TEST_NAME = "TestUser"
 TEST_EMAIL = "testtestov1999@yandex.ru"
 TEST_PASSWORD = "123456"
 

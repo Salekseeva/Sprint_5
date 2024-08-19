@@ -2,7 +2,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import locators as lc
-import pytest
 
 
 def test_constructor_section_switch(browser):  # Используем фикстуру browser
